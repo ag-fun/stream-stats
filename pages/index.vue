@@ -18,35 +18,45 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useRoute } from "vue-router"; // Import useRoute to get the URL parameters
 
-// Use Vue's ref for reactivity
 const allData = ref([]);
-
 const team1 = ref("");
 const team2 = ref("");
 const score = ref("");
+const route = useRoute(); // Get the current route object
+const urlQuery = route.query.url; // Read the 'url' query parameter
+const proxURL = "https://thingproxy.freeboard.io/fetch/";
+const apiUrl = `${proxURL}${encodeURIComponent(urlQuery)}`;
+const fetchData = () => {
+  console.log("Fetching data...");
+  if (!urlQuery) {
+    console.error("No URL query parameter found");
+    return;
+  }
 
-onMounted(() => {
-  // read the url from the path parameter url
-  const route = useRoute(); // Get the current route object
-
-  const urlQuery = route.query.url; // Read the 'url' query parameter
-  const apiUrl = `https://corsproxy.io/?${encodeURIComponent(urlQuery)}`; // Use the query parameter in the API URL
-
-  console.log(apiUrl);
-  fetch(
-    apiUrl
-
-    // "https://corsproxy.io/?https%3A%2F%2Fwww.commentarysource.com%2Fdfv%2Fapi%2Fv2%2Fdnc2024%2Ffield2%2Fcurrent%2Fstats"
-  )
+  fetch(apiUrl, { cache: "no-store" })
     .then((response) => response.json())
     .then((data) => {
+      console.log("Data fetched:", data);
       const transformedData = generateData(data);
-      console.log(transformedData);
-      allData.value = transformedData; // Assign transformed data to allData
+      allData.value = transformedData; // Update data without reloading the page
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
     });
+};
+
+onMounted(() => {
+  // Fetch the data when the component is mounted
+  fetchData();
+
+  const intervalId = setInterval(fetchData, 30000);
+
+  onUnmounted(() => {
+    clearInterval(intervalId);
+  });
 });
 
 // Field mapping
@@ -57,8 +67,6 @@ const field_mapping = [
   ["Clean Holds", "team1OPerfectConversions", "team2OPerfectConversions"],
   ["Turns", "team1Turns", "team2Turns"],
   ["Breaks", "team1DConversions", "team2DConversions"],
-
-  // Add more mappings as needed
 ];
 
 // Generate transformed data
@@ -75,14 +83,4 @@ const generateData = (data) => {
 };
 </script>
 
-<style scoped>
-/* set font robot */
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
-
-.card {
-  font-family: "Roboto", sans-serif;
-  padding: 1rem;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-</style>
+<style scoped></style>
