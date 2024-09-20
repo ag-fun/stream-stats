@@ -77,7 +77,7 @@ onMounted(() => {
   // Fetch the data when the component is mounted
   fetchData();
 
-  const intervalId = setInterval(fetchData, 60000);
+  const intervalId = setInterval(fetchData, 30000);
   onUnmounted(() => {
     clearInterval(intervalId);
   });
