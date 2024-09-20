@@ -1,29 +1,41 @@
 <template>
-  <Card>
-    <template #title>Game Stats</template>
-    <template #content>
-      <DataTable :value="allData" tableStyle="max-width: 700px">
-        <Column
-          field="team1"
-          :header="team1"
-          headerStyle="text-align:center"
-          bodyStyle="text-align:center"
-        ></Column>
-        <Column
-          field="name"
-          :header="score"
-          headerStyle="text-align:center"
-          bodyStyle="text-align:center"
-        ></Column>
-        <Column
-          field="team2"
-          :header="team2"
-          headerStyle="text-align:center"
-          bodyStyle="text-align:center"
-        ></Column>
-      </DataTable>
-    </template>
-  </Card>
+  <!-- center the card -->
+  <div
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    "
+  >
+    <Card>
+      <template #title>Game Stats</template>
+      <template #content>
+        <DataTable :value="allData" tableStyle="max-width: 700px">
+          <Column
+            field="team1"
+            :header="team1"
+            bodyStyle="text-align:center"
+          ></Column>
+          <Column field="name" bodyStyle="text-align:center">
+            <template #header>
+              <div class="">
+                <h2>
+                  {{ score }}
+                </h2>
+              </div>
+            </template>
+          </Column>
+          <Column
+            field="team2"
+            :header="team2"
+            headerStyle="text-align:center"
+            bodyStyle="text-align:center"
+          ></Column>
+        </DataTable>
+      </template>
+    </Card>
+  </div>
 </template>
 
 <script setup>
@@ -85,7 +97,7 @@ const field_mapping = [
 const generateData = (data) => {
   team1.value = data[0].team1Name;
   team2.value = data[0].team2Name;
-  score.value = `${data[0].team1Score}:${data[0].team2Score}`;
+  score.value = `${data[0].team1Score} : ${data[0].team2Score}`;
 
   return field_mapping.map(([name, team1Field, team2Field]) => ({
     team1: data[0][team1Field],
