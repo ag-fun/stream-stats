@@ -32,9 +32,9 @@ onMounted(() => {
   // read the url from the path parameter url
   const route = useRoute(); // Get the current route object
 
-  const urlParam = route.params.urlParam; // Read the 'urlParam' from the URL path parameters
+  const urlQuery = route.query.url; // Read the 'url' query parameter
+  const apiUrl = `https://corsproxy.io/?${encodeURIComponent(urlQuery)}`; // Use the query parameter in the API URL
 
-  const apiUrl = `https://corsproxy.io/?${encodeURIComponent(urlParam)}`; // Use the parameter in the API URL
   console.log(apiUrl);
   fetch(
     "https://corsproxy.io/?https%3A%2F%2Fwww.commentarysource.com%2Fdfv%2Fapi%2Fv2%2Fdnc2024%2Ffield2%2Fcurrent%2Fstats"

@@ -6,6 +6,10 @@ export default defineNuxtConfig({
   modules: [
     '@primevue/nuxt-module'
   ],
+  app: {
+    baseURL: '/stream-stats/',
+  },
+
   primevue: {
     options: {
       theme: {
