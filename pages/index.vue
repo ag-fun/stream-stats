@@ -37,7 +37,9 @@ onMounted(() => {
 
   console.log(apiUrl);
   fetch(
-    "https://corsproxy.io/?https%3A%2F%2Fwww.commentarysource.com%2Fdfv%2Fapi%2Fv2%2Fdnc2024%2Ffield2%2Fcurrent%2Fstats"
+    apiUrl
+
+    // "https://corsproxy.io/?https%3A%2F%2Fwww.commentarysource.com%2Fdfv%2Fapi%2Fv2%2Fdnc2024%2Ffield2%2Fcurrent%2Fstats"
   )
     .then((response) => response.json())
     .then((data) => {
