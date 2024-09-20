@@ -27,7 +27,8 @@ const team2 = ref("");
 const score = ref("");
 const route = useRoute(); // Get the current route object
 const urlQuery = route.query.url; // Read the 'url' query parameter
-const proxURL = "https://thingproxy.freeboard.io/fetch/";
+// const proxURL = "https://thingproxy.freeboard.io/fetch/";
+const proxURL = "https://api.allorigins.win/get?url=";
 const apiUrl = `${proxURL}${encodeURIComponent(urlQuery)}`;
 const fetchData = () => {
   console.log("Fetching data...");
@@ -39,7 +40,10 @@ const fetchData = () => {
   fetch(apiUrl, { cache: "no-store" })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Data fetched:", data);
+      // if data is String then parse it to JSON
+      if (typeof data.contents === "string") {
+        data = JSON.parse(data.contents);
+      }
       const transformedData = generateData(data);
       allData.value = transformedData; // Update data without reloading the page
     })
