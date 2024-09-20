@@ -2,16 +2,25 @@
   <Card>
     <template #title>Game Stats</template>
     <template #content>
-      <DataTable :value="allData" tableStyle="min-width: 100%">
-        <Column field="team1" :header="team1">
-          <template #body="slotProps">
-            <div class="flex items-center">
-              <span>{{ slotProps.data.team1 }}</span>
-            </div>
-          </template>
-        </Column>
-        <Column field="name" :header="score"></Column>
-        <Column field="team2" :header="team2"></Column>
+      <DataTable :value="allData" tableStyle="max-width: 700px">
+        <Column
+          field="team1"
+          :header="team1"
+          headerStyle="text-align:center"
+          bodyStyle="text-align:center"
+        ></Column>
+        <Column
+          field="name"
+          :header="score"
+          headerStyle="text-align:center"
+          bodyStyle="text-align:center"
+        ></Column>
+        <Column
+          field="team2"
+          :header="team2"
+          headerStyle="text-align:center"
+          bodyStyle="text-align:center"
+        ></Column>
       </DataTable>
     </template>
   </Card>
@@ -56,8 +65,7 @@ onMounted(() => {
   // Fetch the data when the component is mounted
   fetchData();
 
-  const intervalId = setInterval(fetchData, 30000);
-
+  const intervalId = setInterval(fetchData, 60000);
   onUnmounted(() => {
     clearInterval(intervalId);
   });
@@ -65,12 +73,12 @@ onMounted(() => {
 
 // Field mapping
 const field_mapping = [
-  ["Turns", "team1Turns", "team2Turns"],
-  ["Breaks", "team1DConversions", "team2DConversions"],
   ["Holds", "team1OConversions", "team2OConversions"],
   ["Clean Holds", "team1OPerfectConversions", "team2OPerfectConversions"],
   ["Turns", "team1Turns", "team2Turns"],
   ["Breaks", "team1DConversions", "team2DConversions"],
+  //   break chances
+  ["Break Chances", "team2OTurns", "team1OTurns"],
 ];
 
 // Generate transformed data
@@ -87,4 +95,16 @@ const generateData = (data) => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+/* set the font to roboto everywhere */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.p-component {
+  font-family: "Roboto", sans-serif;
+}
+</style>
