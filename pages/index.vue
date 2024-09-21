@@ -6,6 +6,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      background: rgb(218, 214, 214) !important;
     "
   >
     <Card>
@@ -118,8 +119,5 @@ body {
 
 .p-component {
   font-family: "Roboto", sans-serif;
-  /* set font color to white */
 }
-
-
 </style>
