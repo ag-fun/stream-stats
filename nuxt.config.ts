@@ -15,7 +15,7 @@ export default defineNuxtConfig({
         {
           id: 'theme-link',
           rel: 'stylesheet',
-          href: '/stream-stats/themes/aura-dark-amber/theme.css',
+          href: '/stream-stats/themes/aura-light-amber/theme.css',
         },
       ],
 

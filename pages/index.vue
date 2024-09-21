@@ -118,5 +118,8 @@ body {
 
 .p-component {
   font-family: "Roboto", sans-serif;
+  /* set font color to white */
 }
+
+
 </style>
